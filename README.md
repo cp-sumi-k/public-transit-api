@@ -5,22 +5,6 @@
 ## Overview
 Implement RESTful API to provide upcoming public transit service’s schedules between given origin and destination stations using Metropolitan Transportation Authority(MTA) static GTFS data.
 
-## Run Docker Application 
-
-#### [Docker Hub Image](https://hub.docker.com/r/sumi01/public-transit-service/tags)
-
-### Pull Image
-
-```sh
-docker pull sumi01/public-transit-service:0.0.1
-```
-
-### Create container and run image
-
-```sh
-docker run -p 8000:8000 sumi01/public-transit-service:0.0.1
-```
-
 ## Run Application Locally
 
 ### Setup envrinment variables

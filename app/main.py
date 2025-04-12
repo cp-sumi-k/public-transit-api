@@ -5,8 +5,10 @@ from contextlib import asynccontextmanager
 from routes import router as api_router
 from geocoding import GeocodingService
 from gtfs_loader import GTFSLoader
-
+from mangum import Mangum
 # Get settings from .env file
+
+
 class Settings(BaseSettings):
     server_port: int
     google_maps_api_key: str
@@ -31,6 +33,8 @@ async def lifespan(app: FastAPI):
 settings = Settings()
 app = FastAPI(lifespan=lifespan)
 app.include_router(api_router)
+
+handler = Mangum(app)
 
 
 if __name__ == "__main__":

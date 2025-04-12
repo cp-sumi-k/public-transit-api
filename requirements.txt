@@ -5,3 +5,4 @@ pandas==2.1.4
 pytest==7.4.3
 httpx==0.25.1
 requests==2.31.0
+mangum==0.19.0

@@ -1,8 +1,7 @@
 import os
 import sys
 
-# Get the project root directory
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+app_path = os.path.join(project_root, 'app')
 
-# Add the project root to Python path
-sys.path.insert(0, project_root)
+sys.path.insert(0, app_path)

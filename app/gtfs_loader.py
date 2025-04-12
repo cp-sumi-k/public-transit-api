@@ -4,7 +4,7 @@ from utils import convert_times
 
 
 class GTFSLoader:
-    def __init__(self, root_data_dir: str = "data"):
+    def __init__(self, root_data_dir: str = "app/data"):
         self.root_data_dir = root_data_dir
         self.modes = [
             f for f in os.listdir(self.root_data_dir) if os.path.isdir(os.path.join(self.root_data_dir, f))
