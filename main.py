@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load GTFS data once on startup
-    loader = GTFSLoader(root_data_dir="gtfs/data")
+    loader = GTFSLoader(root_data_dir="data")
     loader.load_all()
     app.state.gtfs_loader = loader
 
