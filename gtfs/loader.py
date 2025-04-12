@@ -49,6 +49,22 @@ class GTFSLoader:
             "routes": self.routes_df
         }
 
+    def get_closest_stop(self, stop_id: str):
+        # Convert stop IDs to string
+        stops = self.stops_df.copy()
+        stops['stop_id'] = stops['stop_id'].astype(str)
+
+        return stops[stops['stop_id'] == stop_id]['stop_name'].values[0]
+
+    def get_stop_id_from_coordinates(self, latitude: float, longitude: float):
+        self.stops_df["distance"] = (
+            (self.stops_df["stop_lat"] - latitude)**2 +
+            (self.stops_df["stop_lon"] - longitude)**2
+        )
+
+        stop = self.stops_df.sort_values("distance").iloc[0]
+        return str(stop['stop_id'])
+
     def get_schedule(self, origin_stop_id: str, destination_stop_id: str):
         # Convert stop IDs to string
         stop_times = self.stop_times_df.copy()

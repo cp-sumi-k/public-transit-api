@@ -31,4 +31,5 @@ class TransitScheduleResponse(BaseModel):
     total_schedules: int
     total_pages: int
     current_page: int
+    closest_stop: str
     next_schedules: list[TransitSchedule]

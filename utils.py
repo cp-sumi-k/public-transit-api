@@ -3,7 +3,6 @@ import pytz
 
 TIME_FORMAT = "%H:%M:%S"
 
-
 def convert_times(time: str, tz_str="Asia/Kolkata"):
     """Convert time string to ISO format with timezone.
     
