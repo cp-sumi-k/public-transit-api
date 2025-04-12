@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
-from service.transit import get_next_transit_schedules
-from model.transit import TransitScheduleInput, TransitScheduleResponse
+from transit import get_next_transit_schedules
+from model import TransitScheduleInput, TransitScheduleResponse
 
 router = APIRouter()
 

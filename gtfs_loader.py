@@ -6,11 +6,11 @@ from utils import convert_times
 class GTFSLoader:
     def __init__(self, root_data_dir: str = "data"):
         self.root_data_dir = root_data_dir
-        self.modes = ["buses", "railroads"]
+        self.modes = [
+            f for f in os.listdir(self.root_data_dir) if os.path.isdir(os.path.join(self.root_data_dir, f))
+        ]
         self.stops_df = pd.DataFrame()
         self.stop_times_df = pd.DataFrame()
-        self.trips_df = pd.DataFrame()
-        self.routes_df = pd.DataFrame()
 
     def load_all(self):
         for mode in self.modes:
@@ -19,14 +19,10 @@ class GTFSLoader:
 
             stops = pd.read_csv(os.path.join(mode_dir, "stops.txt"))
             stop_times = pd.read_csv(os.path.join(mode_dir, "stop_times.txt"))
-            trips = pd.read_csv(os.path.join(mode_dir, "trips.txt"))
-            routes = pd.read_csv(os.path.join(mode_dir, "routes.txt"))
 
             # Add transit mode label for traceability
             stops["transit_mode"] = mode
             stop_times["transit_mode"] = mode
-            trips["transit_mode"] = mode
-            routes["transit_mode"] = mode
 
             self.stops_df = pd.concat(
                 [self.stops_df, stops], ignore_index=True)
@@ -35,28 +31,31 @@ class GTFSLoader:
                 [self.stop_times_df, stop_times], ignore_index=True)
             self.stop_times_df["transit_mode"] = mode
 
-            self.trips_df = pd.concat(
-                [self.trips_df, trips], ignore_index=True)
-            self.routes_df = pd.concat(
-                [self.routes_df, routes], ignore_index=True)
-
         print("All modes loaded successfully.")
 
         return {
             "stops": self.stops_df,
             "stop_times": self.stop_times_df,
-            "trips": self.trips_df,
-            "routes": self.routes_df
         }
 
     def get_closest_stop(self, stop_id: str):
-        # Convert stop IDs to string
+        if self.stops_df.empty:
+            return pd.DataFrame()
+
         stops = self.stops_df.copy()
         stops['stop_id'] = stops['stop_id'].astype(str)
 
-        return stops[stops['stop_id'] == stop_id]['stop_name'].values[0]
+        stop = stops[stops['stop_id'] == stop_id]
+
+        if stop.empty:
+            return pd.DataFrame()
+
+        return stop['stop_name'].values[0]
 
     def get_stop_id_from_coordinates(self, latitude: float, longitude: float):
+        if self.stops_df.empty:
+            return pd.DataFrame()
+
         self.stops_df["distance"] = (
             (self.stops_df["stop_lat"] - latitude)**2 +
             (self.stops_df["stop_lon"] - longitude)**2
@@ -66,7 +65,9 @@ class GTFSLoader:
         return str(stop['stop_id'])
 
     def get_schedule(self, origin_stop_id: str, destination_stop_id: str):
-        # Convert stop IDs to string
+        if self.stop_times_df.empty:
+            return pd.DataFrame()
+
         stop_times = self.stop_times_df.copy()
         stop_times['stop_id'] = stop_times['stop_id'].astype(str)
 

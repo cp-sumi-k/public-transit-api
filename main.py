@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from gtfs.loader import GTFSLoader
 from contextlib import asynccontextmanager
 from routes import router as api_router
-from geocoding.reverse import GeocodingService
+from geocoding import GeocodingService
+from gtfs_loader import GTFSLoader
 
 # Get settings from .env file
 class Settings(BaseSettings):
