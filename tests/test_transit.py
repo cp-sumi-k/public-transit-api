@@ -1,6 +1,5 @@
 import unittest
 import os
-from datetime import datetime
 import pandas as pd
 from transit import get_next_transit_schedules
 from model import TransitScheduleInput, Coordinates
