@@ -50,10 +50,18 @@ python main.py
 
 - `.env.example` : Have required env variables
 
-- `gtfs`: Contains MTA's static data and loader for loading all data in the application
+- `data`: Contains MTA's static data
 
-- `service`: Controller layer of app, provides logic of getting data
+- `gtfs_loader.py`: Loader for loading MTA's data in the application
 
-- `model`: Model layer of app, contains all required models
+- `transit.py`: Controller layer of app, provides logic of getting data
+
+- `model.py`: Model layer of app, contains all required models
 
 - `utils.py`: Have all utility functions required in app
+
+- `geocoding.py ` : Google Maps API integration
+
+- `test`: Contains unit tests
+
+- `test_data`: Scaffolded folder for test data of unit tests

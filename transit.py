@@ -1,4 +1,4 @@
-from model.transit import TransitScheduleInput, TransitSchedule, TransitScheduleResponse
+from model import TransitScheduleInput, TransitSchedule, TransitScheduleResponse
 import math
 from fastapi import HTTPException
 
