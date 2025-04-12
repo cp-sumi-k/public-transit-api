@@ -36,10 +36,24 @@ pip install -r requirements.txt
 python main.py
 ```
 
+### API Documentation
+
+- After running application, you can find API doc at `http://localhost:8000/redoc`.
+
 ## Project Structure
 
-- main.py : Entrypoint of the application contains setupo of FastAPI
+- `main.py` : Entrypoint of the application contains setup of FastAPI
 
-- requirements.txt : Index all the require depenciens for the project
+- `routes.py`: Have all API routes
 
-- .env.example : Have required env variables
+- `requirements.txt` : Index all the require depenciens for the project
+
+- `.env.example` : Have required env variables
+
+- `gtfs`: Contains MTA's static data and loader for loading all data in the application
+
+- `service`: Controller layer of app, provides logic of getting data
+
+- `model`: Model layer of app, contains all required models
+
+- `utils.py`: Have all utility functions required in app

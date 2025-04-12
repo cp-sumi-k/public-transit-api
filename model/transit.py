@@ -21,6 +21,14 @@ class TransitScheduleInput(BaseModel):
         return self
 
 class TransitSchedule(BaseModel):
+    trip_id: str
     transit_mode: str
     eta_origin: str
     eta_destination: str
+
+
+class TransitScheduleResponse(BaseModel):
+    total_schedules: int
+    total_pages: int
+    current_page: int
+    next_schedules: list[TransitSchedule]
