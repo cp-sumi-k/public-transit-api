@@ -4,11 +4,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from gtfs.loader import GTFSLoader
 from contextlib import asynccontextmanager
 from routes import router as api_router
-
+from geocoding.reverse import GeocodingService
 
 # Get settings from .env file
 class Settings(BaseSettings):
     server_port: int
+    google_maps_api_key: str
     model_config = SettingsConfigDict(env_file='.env')
 
 
@@ -18,6 +19,12 @@ async def lifespan(app: FastAPI):
     loader = GTFSLoader(root_data_dir="gtfs/data")
     loader.load_all()
     app.state.gtfs_loader = loader
+
+    geocoding_service = GeocodingService(
+        api_key=settings.google_maps_api_key
+    )
+    app.state.geocoding_service = geocoding_service
+
     yield
 
 
