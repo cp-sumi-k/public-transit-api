@@ -2,34 +2,26 @@ from model.transit import TransitScheduleInput, TransitSchedule
 import math
 
 
-response: list[TransitSchedule] = [
-    {
-        "transit_mode": "rail",
-        "eta_origin": "2025-04-12 16:19:09.383766",
-        "eta_destination": "2025-04-12 17:19:09.383766"
-    },
-    {
-        "transit_mode": "bus",
-        "eta_origin": "2025-04-12 16:19:09.383766",
-        "eta_destination": "2025-04-12 17:19:09.383766"
-    },
-    {
-        "transit_mode": "light_rail",
-        "eta_origin": "2025-04-12 16:19:09.383766",
-        "eta_destination": "2025-04-12 17:19:09.383766"
-    },
-]
-
-
 def get_next_transit_schedules(state: any, input: TransitScheduleInput, page: int = 1, limit: int = 10):
     try:
-        # get total number of schedules
+        loader = state.gtfs_loader
+
+        response = []
+
+        if input.origin_station_id:
+            response = loader.get_schedule(
+                input.origin_station_id, input.destination_station_id).to_dict(orient="records")
+        elif input.coordinates:
+            # TODO: Implement reverse geocoding using coordinates
+            pass
+        else:
+            raise ValueError(
+                "Either 'origin_station_id' or 'coordinates' must be provided.")
+
+        # paginate
         total_schedules = len(response)
         total_pages = math.ceil(total_schedules / limit)
         skip = (page - 1) * limit
-
-        print(total_schedules, total_pages, skip,
-              limit, response)
 
         return {
             "total_schedules": total_schedules,

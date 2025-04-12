@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-
+from pydantic import BaseModel, model_validator
+from typing import Optional
 
 class Coordinates(BaseModel):
     latitude: float | None = None
@@ -7,10 +7,18 @@ class Coordinates(BaseModel):
 
 
 class TransitScheduleInput(BaseModel):
-    origin_station_id: str
+    origin_station_id: Optional[str] = None
     destination_station_id: str
-    coordinates: Coordinates | None = None
+    coordinates: Optional[Coordinates] = None
 
+    @model_validator(mode="after")
+    def check_either_origin_or_coordinates(self):
+        origin = self.origin_station_id
+        coords = self.coordinates
+        if not origin and not coords:
+            raise ValueError(
+                "Either 'origin_station_id' or 'coordinates' must be provided.")
+        return self
 
 class TransitSchedule(BaseModel):
     transit_mode: str
