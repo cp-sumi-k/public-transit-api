@@ -82,5 +82,3 @@ Request:
 - `geocoding.py ` : Google Maps API integration
 
 - `test`: Contains unit tests
-
-- `test_data`: Scaffolded folder for test data of unit tests
