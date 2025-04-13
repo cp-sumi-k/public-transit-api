@@ -23,7 +23,6 @@ jobs:
           aws-region: ap-south-1
 
       - name: Build
-        id: ecr
         run: |
           ./scripts/ecr.sh ${{ secrets.AWS_ACCOUNT_ID }}
 
@@ -37,4 +36,4 @@ jobs:
           timeout-in-minutes: "10"
           no-fail-on-empty-changeset: "1"
           parameter-overrides: >-
-            ECRImageURI=${{ steps.ecr.outputs.ecr-image-uri }},            
+            ECRImageURI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/public-transit-service:1.0.0           
