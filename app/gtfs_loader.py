@@ -39,7 +39,6 @@ class GTFSLoader:
         }
 
     def get_closest_stop(self, stop_id: str):
-        print("Getting closest stop: ", stop_id, self.stops_df)
         if self.stops_df.empty:
             return ""
 
