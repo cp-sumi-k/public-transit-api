@@ -6,21 +6,28 @@ from routes import router as api_router
 from geocoding import GeocodingService
 from gtfs_loader import GTFSLoader
 from mangum import Mangum
+
+
 # Get settings from .env file
-
-
 class Settings(BaseSettings):
     server_port: int
     google_maps_api_key: str
     model_config = SettingsConfigDict(env_file='.env')
 
 
+gtfs_cache = {}
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load GTFS data once on startup
-    loader = GTFSLoader(root_data_dir="data")
-    loader.load_all()
-    app.state.gtfs_loader = loader
+    if 'data' not in gtfs_cache:
+        print("Loading GTFS data...")
+        # Load GTFS data once on startup
+        loader = GTFSLoader(root_data_dir="data")
+        data = loader.load_all()
+        gtfs_cache["data"] = data
+        gtfs_cache["loader"] = loader
+
+    app.state.gtfs_loader = gtfs_cache["loader"]
 
     geocoding_service = GeocodingService(
         api_key=settings.google_maps_api_key

@@ -86,7 +86,7 @@ class TestGTFSLoader(unittest.TestCase):
         empty_loader = GTFSLoader()
 
         closest_stop = empty_loader.get_closest_stop('S1')
-        self.assertTrue(closest_stop.empty)
+        self.assertTrue(closest_stop == "")
 
         result = empty_loader.get_schedule('S1', 'S2')
         self.assertTrue(result.empty)

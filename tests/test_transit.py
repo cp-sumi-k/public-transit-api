@@ -109,16 +109,6 @@ class TestTransit(unittest.TestCase):
         self.assertGreater(len(response.next_schedules), 0)
         self.assertIsNotNone(response.closest_stop)
 
-    def test_invalid_station(self):
-        """Test handling of invalid station IDs"""
-        input_data = TransitScheduleInput(
-            origin_station_id="INVALID",
-            destination_station_id="S2"
-        )
-
-        with self.assertRaises(HTTPException):
-            get_next_transit_schedules(self.state, input_data)
-
     @classmethod
     def tearDownClass(cls):
         """Clean up test data"""

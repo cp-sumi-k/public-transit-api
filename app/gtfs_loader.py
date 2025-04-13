@@ -39,8 +39,9 @@ class GTFSLoader:
         }
 
     def get_closest_stop(self, stop_id: str):
+        print("Getting closest stop: ", stop_id, self.stops_df)
         if self.stops_df.empty:
-            return pd.DataFrame()
+            return ""
 
         stops = self.stops_df.copy()
         stops['stop_id'] = stops['stop_id'].astype(str)
@@ -48,13 +49,13 @@ class GTFSLoader:
         stop = stops[stops['stop_id'] == stop_id]
 
         if stop.empty:
-            return pd.DataFrame()
+            return ""
 
         return stop['stop_name'].values[0]
 
     def get_stop_id_from_coordinates(self, latitude: float, longitude: float):
         if self.stops_df.empty:
-            return pd.DataFrame()
+            return ""
 
         self.stops_df["distance"] = (
             (self.stops_df["stop_lat"] - latitude)**2 +
@@ -67,7 +68,6 @@ class GTFSLoader:
     def get_schedule(self, origin_stop_id: str, destination_stop_id: str):
         if self.stop_times_df.empty:
             return pd.DataFrame()
-
         stop_times = self.stop_times_df.copy()
         stop_times['stop_id'] = stop_times['stop_id'].astype(str)
 
