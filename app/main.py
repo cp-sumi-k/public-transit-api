@@ -38,8 +38,10 @@ async def lifespan(app: FastAPI):
 
 
 settings = Settings()
+
+root_path = "dev"
 app = FastAPI(
-    openapi_url="/openapi.json",
+    root_path=f'/{root_path}',
     lifespan=lifespan
 )
 app.include_router(api_router)
