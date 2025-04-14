@@ -14,6 +14,11 @@ Implement a RESTful API to provide upcoming public transit service schedules bet
 - **API gateway:** API routing service. Integrate Lambda proxy with API gateway REST API
 - **Cloudformation Stack:** Infrastructure As Code(IAM) service. [Automate ECR image push and Lambda deployment](https://github.com/cp-sumi-k/public-transit-api/blob/main/infrastructure/lambda-template.yml)
 
+## CI/CD Workflow
+
+- [Test](https://github.com/cp-sumi-k/public-transit-api/blob/main/.github/workflows/test.yml)
+- [Deployment](https://github.com/cp-sumi-k/public-transit-api/blob/main/.github/workflows/deploy.yml)
+
 ## Project Structure
 
 - [`app`](https://github.com/cp-sumi-k/public-transit-api/tree/main/app): Main directory contains FastAPI application
