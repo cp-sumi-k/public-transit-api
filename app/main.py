@@ -6,6 +6,7 @@ from routes import router as api_router
 from geocoding import GeocodingService
 from gtfs_loader import GTFSLoader
 from mangum import Mangum
+from fastapi.middleware.cors import CORSMiddleware
 
 
 # Get settings from .env file
@@ -40,6 +41,14 @@ async def lifespan(app: FastAPI):
 settings = Settings()
 app = FastAPI(lifespan=lifespan)
 app.include_router(api_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 handler = Mangum(app)
 
